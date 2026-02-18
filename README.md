@@ -1,12 +1,12 @@
 # BIOL 7180-EA1: Scripting for Biologist
 
 # Group Members
-| Name                | Username          |
-| ------------------- | ----------------- |
-| Melika Shiran       | Melikashiran      |
-| Sean-Sean           | Seun-Onileowo     |
-| Surman-Meem         | surma-meem        |
-| Prince Mensah Ansah | princemensahansah |
+| Name                | Username          |Email|
+| ------------------- | ----------------- |--------------|
+| Melika Shiran       | Melikashiran      |mzg0146@auburn.edu|
+| Sean Onileowo      | Seun-Onileowo     |sa0027@auburn.edu|
+| Surma Mohiudden Meem        | surma-meem        |sum0005@auburn.edu|
+| Prince Mensah Ansah | princemensahansah |pma0020@auburn.edu|
 
 # Project Title
 Germline PRMD9 expression across selected taxa
