@@ -9,7 +9,7 @@
 | Prince Mensah Ansah | princemensahansah |
 
 # Project Title
-Germline PRMD9 Expression across selected taxa
+Germline PRMD9 expression across selected taxa
 
 ## Project Description
 
