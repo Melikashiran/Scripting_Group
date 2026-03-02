@@ -1,4 +1,4 @@
-# BIOL 7180-EA1: Scripting for Biologist
+# BIOL 7180-EA1: Scripting for Biologist:
 
 # Group Members
 | Name                | Username          |Email|
