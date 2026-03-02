@@ -24,6 +24,31 @@ The project will employ `Bash scripting` for batch processings and `Python` for 
 ## Data availability
 
 
+# Feedback
 
+This sounds like a promising project for the class.
+As you begin working on the project, think about ways you can make the Bash and
+Python code flexible so that it can be easily re-used for future analyses.
+For example, it would be ideal if
+-   future RNAseq data can be seamlessly added.
+-   you can easily change the focus from PRDM9 to other genes.
 
+For scripting with Bash,
+[this Bash style guide](https://google.github.io/styleguide/shellguide.html)
+will be helpful for translating the best practices we learn in class with
+Python to Bash.
+For example,
+[the section about comments](https://google.github.io/styleguide/shellguide.html#comments)
+shows how to follow best practices for documenting Bash code (i.e., the
+equivalent of docstrings in Python).
 
+For data visualization,
+[matplotlib](https://matplotlib.org/)
+is the most popular Python package.
+I like using
+[seaborn](https://seaborn.pydata.org/), which uses matplotlib under the hood,
+but has a simpler interface (in my opinion).
+If you want to make interactive graphics, you can also look into
+[plotly](https://plotly.com/python/)
+and
+[bokeh](https://bokeh.org/).
