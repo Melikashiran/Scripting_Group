@@ -46,3 +46,17 @@ These are organisms with RNAseq data which includes gonads/testis/ovaries and ei
 | Naja naja | SRR8754967<br>SRR8754989 | SRR8754969<br>SRR8754979<br>SRR8754971 | — |
 | Podarcis muralis | — | SRR6662598<br>SRR6662600 | SRR8468522 |
 | Chelonia mydas | — | SRR14839288<br>SRR14517640 | SRR14483578<br>SRR14483579<br>SRR14483580 |
+
+
+## Organisms excluded from the comparative tissue dataset
+
+| Organism | Liver | Gonads (Testis/Ovaries) | Skin | Notes |
+|----------|-------|--------------------------|------|------|
+| Emydura macquarii macquarii | SRR29317041 | — | — | Only reproductive tissue available (not classified as gonads/testis/ovaries) |
+| Caretta caretta | — | SRR32073537<br>SRR32105404 | — | No liver or skin dataset |
+| Dermochelys coriacea | — | — | SRR12284231<br>SRR12284232<br>SRR12284233 | No liver dataset |
+| Pelodiscus sinensis | — | — | — | No RNA-seq accessions listed |
+| Pogona vitticeps | — | — | — | No RNA-seq accessions listed |
+| Anolis carolinensis | — | — | — | No RNA-seq accessions listed |
+| Chelonia mydas* | — | SRR14839288<br>SRR14517640 | SRR14483578<br>SRR14483579<br>SRR14483580 | Included here because it lacks liver, but has gonads + skin |
+| Podarcis muralis* | — | SRR6662598<br>SRR6662600 | SRR8468522 | Included here because it lacks liver, but has gonads + skin |
