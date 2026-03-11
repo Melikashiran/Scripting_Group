@@ -27,6 +27,7 @@ These are organisms with RNAseq data which includes gonads/testis/ovaries and ei
 
 
 
+
 ## After Filtering
 ## RNA-seq datasets used for comparative tissue analysis
 
@@ -46,6 +47,7 @@ These are organisms with RNAseq data which includes gonads/testis/ovaries and ei
 | Naja naja | SRR8754967<br>SRR8754989 | SRR8754969<br>SRR8754979<br>SRR8754971 | — |
 | Podarcis muralis | — | SRR6662598<br>SRR6662600 | SRR8468522 |
 | Chelonia mydas | — | SRR14839288<br>SRR14517640 | SRR14483578<br>SRR14483579<br>SRR14483580 |
+|Emydura macquarii macquarii|	SRR29317041|	SRR29317039|-|
 
 
 ## Organisms excluded from the comparative tissue dataset
