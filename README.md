@@ -9,7 +9,7 @@
 | Prince Mensah Ansah | princemensahansah |pma0020@auburn.edu|
 
 # Project Title
-Germline PRMD9 expression across selected taxa
+Germline PRMD9 expression across selected taxa.
 
 ## Project Description
 
