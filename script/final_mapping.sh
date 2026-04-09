@@ -24,54 +24,58 @@ for species_dir in "$RAW_DIR"/*; do
     echo "Species: $species"
     echo "======================================"
 
-    ########## Locate reference files dynamically
+    ########## Locate assembly directory
 ASSEMBLY_DIR="$species_dir/assembly"
 
 GENOME_GZ=$(find "$ASSEMBLY_DIR" -maxdepth 1 -type f \( -name "*.fna.gz" -o -name "*.fa.gz" \) | head -n 1)
-GTF_FILE=$(find "$ASSEMBLY_DIR" -maxdepth 1 -type f -name "*.gtf" | head -n 1)
 GFF_GZ=$(find "$ASSEMBLY_DIR" -maxdepth 1 -type f -name "*.gff.gz" | head -n 1)
 
-########## Handle missing GTF (convert from GFF if needed)
-if [[ -z "$GTF_FILE" && -n "$GFF_GZ" ]]; then
-    echo "Converting GFF → GTF for $species"
-    gunzip -c "$GFF_GZ" | gffread -T -o "$ASSEMBLY_DIR/${species}.gtf"
-    GTF_FILE="$ASSEMBLY_DIR/${species}.gtf"
-fi
-
-########## Final validation
-if [[ -z "$GENOME_GZ" || -z "$GTF_FILE" ]]; then
-    echo "Missing genome or annotation for $species → skipping"
+if [[ -z "$GENOME_GZ" || -z "$GFF_GZ" ]]; then
+    echo "Missing genome or GFF for $species → skipping"
     continue
 fi
 
-########## Define working files
+########## Define standardized outputs
 REF_FASTA="$ASSEMBLY_DIR/${species}.fasta"
-REF_GTF="$GTF_FILE"
+REF_GTF="$ASSEMBLY_DIR/${species}.gtf"
 INDEX_PREFIX="$ASSEMBLY_DIR/${species}_index"
+SS_FILE="$ASSEMBLY_DIR/${species}.ss"
+EXON_FILE="$ASSEMBLY_DIR/${species}.exon"
 
-    ########## Prepare reference (only once)
-    if [[ ! -f "${INDEX_PREFIX}.1.ht2" ]]; then
-        echo "Preparing reference for $species..."
+########## Prepare reference (ONLY ONCE)
+if [[ ! -f "${INDEX_PREFIX}.1.ht2" ]]; then
+    echo "Preparing reference for $species..."
 
-        ########## Unzip genome + GTF
+    ########## Unzip genome (only once)
+    if [[ ! -f "$REF_FASTA" ]]; then
         gunzip -c "$GENOME_GZ" > "$REF_FASTA"
-        gunzip -c "$GTF_GZ" > "$REF_GTF"
-
-        ########## Extract splice sites and exons
-        hisat2_extract_splice_sites.py "$REF_GTF" > "$species_dir/${species}.ss"
-        hisat2_extract_exons.py "$REF_GTF" > "$species_dir/${species}.exon"
-
-        ########## Build HISAT2 index (splice-aware)
-        hisat2-build -p $THREADS \
-            --ss "$species_dir/${species}.ss" \
-            --exon "$species_dir/${species}.exon" \
-            "$REF_FASTA" \
-            "$INDEX_PREFIX"
-
-        echo "Index built for $species"
-    else
-        echo "Index already exists for $species"
     fi
+
+    ########## ALWAYS convert GFF → GTF
+    if [[ ! -f "$REF_GTF" ]]; then
+        echo "Converting GFF → GTF..."
+        gunzip -c "$GFF_GZ" | gffread -T -o "$REF_GTF"
+    fi
+
+    ########## Validate GTF
+    echo "Validating GTF..."
+    gffread -E "$REF_GTF" 2> "$ASSEMBLY_DIR/gtf_validation.log"
+
+    ########## Extract splice sites & exons
+    hisat2_extract_splice_sites.py "$REF_GTF" > "$SS_FILE"
+    hisat2_extract_exons.py "$REF_GTF" > "$EXON_FILE"
+
+    ########## Build HISAT2 index
+    hisat2-build -p $THREADS \
+        --ss "$SS_FILE" \
+        --exon "$EXON_FILE" \
+        "$REF_FASTA" \
+        "$INDEX_PREFIX"
+
+    echo "Index built for $species"
+else
+    echo "Index already exists for $species"
+fi
 
     ########## Process tissues
     for tissue_dir in "$species_dir"/*; do
