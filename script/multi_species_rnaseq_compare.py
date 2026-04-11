@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 multi_species_rnaseq_compare.py
------------------
+-----
 Compare RNAseq expression of a gene of interest using raw count files
 and a metadata table.  Two comparison modes are available:
 
@@ -11,8 +11,8 @@ and a metadata table.  Two comparison modes are available:
   across   – compare one tissue across all species (species on the x-axis)
              e.g. gonad expression in Crotalus adamanteus vs Crotalus tigris vs Thamnophis sirtalis
 
-Usage examples
---------------
+Usage
+-----
 # Within-species (tissue1 vs tissue2 for every species):
 python3 multi_species_rnaseq_compare.py \\
     --counts *.tsv --metadata metadata.csv \\
@@ -81,12 +81,12 @@ def load_metadata(metadata_path: str) -> pd.DataFrame:
 # Loads a count file, ensuring the first column is 'gene_id' and setting it as the index.
 def load_count_file(filepath: str) -> pd.DataFrame:
     """
-    Load a single tab-separated count file.
-
-    The first column must be 'gene_id'; all remaining columns are sample IDs.
-    Returns the DataFrame with gene_id as the index.
+    Load a single count file. Auto-detects comma vs tab separator
+    based on file extension (.csv → comma, .tsv/.txt → tab).
     """
-    df = pd.read_csv(filepath, sep="\t", index_col=0)
+    path = Path(filepath)
+    sep = "\t" if path.suffix.lower() in (".tsv", ".txt") else ","
+    df = pd.read_csv(path, sep=sep, index_col=0)
     df.index = df.index.astype(str)
     df.index.name = "gene_id"
     return df
@@ -182,7 +182,12 @@ def extract_expression(
             print(f"[WARNING] Skipping '{filepath}': {exc}", file=sys.stderr)
             continue
 
+        hits = find_gene_rows(counts, gene_pattern)
+        if hits.empty:
+            print(f"[WARNING] '{gene_pattern}' not found in {filepath} — skipping.")
+            continue
         row, matched_gene_id = resolve_gene(counts, gene_pattern)
+
         if gene_label is None:
             gene_label = matched_gene_id
 
@@ -377,7 +382,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "-g", "--gene",
         required=True, metavar="PATTERN",
-        help="Regex to search the gene_id column (e.g. 'ERLIN1').",
+        help="Regex to search the gene_id column (e.g. 'PRDM9').",
     )
 
     # Comparison mode
