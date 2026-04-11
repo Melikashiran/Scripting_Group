@@ -4,6 +4,7 @@ source /apps/profiles/modules_asax.sh.dyn
 module load hisat2
 module load samtools
 module load stringtie
+module load gffread
 
 BASE_DIR="/home/aubpma001/prdm9/Scripting_Group/script"
 RAW_DIR="/home/aubpma001/prdm9/Scripting_Group/script/raw_data"
