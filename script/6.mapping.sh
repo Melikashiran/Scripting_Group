@@ -1,4 +1,5 @@
 #!/bin/sh
+
  
 ######### FunGen Course Instructions ############
 ## Purpose: The purpose of this script is to 

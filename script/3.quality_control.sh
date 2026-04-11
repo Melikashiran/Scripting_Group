@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#set -euo pipefail
+###set -euo pipefail
 
 source /apps/profiles/modules_asax.sh.dyn
 module load fastqc/0.12.1

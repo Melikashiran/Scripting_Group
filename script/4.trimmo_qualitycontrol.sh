@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 source /apps/profiles/modules_asax.sh.dyn
 module load fastqc/0.12.1
 module load multiqc

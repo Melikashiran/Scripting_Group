@@ -1,4 +1,4 @@
-
+##Second script
 # Phrynosoma platyrhinos genome assembly download script
 wget https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/020/142/125/GCA_020142125.1_MUOH_PhPlat_1.1/GCA_020142125.1_MUOH_PhPlat_1.1_genomic.fna.gz
 

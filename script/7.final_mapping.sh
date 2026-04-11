@@ -1,5 +1,6 @@
 #!/bin/bash
 
+
 source /apps/profiles/modules_asax.sh.dyn
 module load hisat2
 module load samtools
