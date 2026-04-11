@@ -1,37 +1,37 @@
 #!/usr/bin/env python3
 """
-rnaseq_compare.py
+multi_species_rnaseq_compare.py
 -----------------
 Compare RNAseq expression of a gene of interest using raw count files
 and a metadata table.  Two comparison modes are available:
 
   within   – compare two tissues within each species (one panel per species)
-             e.g. liver vs brain for Human, Mouse, Zebrafish …
+             e.g. liver vs gonads for Crotalus adamanteus, Crotalus tigris,Thamnophis sirtalis …
 
   across   – compare one tissue across all species (species on the x-axis)
-             e.g. liver expression in Human vs Mouse vs Zebrafish
+             e.g. gonad expression in Crotalus adamanteus vs Crotalus tigris vs Thamnophis sirtalis
 
 Usage examples
 --------------
 # Within-species (tissue1 vs tissue2 for every species):
-python rnaseq_compare.py \\
+python3 multi_species_rnaseq_compare.py \\
     --counts *.tsv --metadata metadata.csv \\
-    --gene "ERLIN1" --mode within \\
+    --gene "PRDM9" --mode within \\
     --tissue1 liver --tissue2 brain \\
     --output results.csv --plot results.png
 
 # Across-species (one tissue, all species):
-python rnaseq_compare.py \\
+python3 multi_species_rnaseq_compare.py \\
     --counts *.tsv --metadata metadata.csv \\
-    --gene "ERLIN1" --mode across \\
+    --gene "PRDM9" --mode across \\
     --tissue1 liver \\
     --output results.csv --plot results.png
 
 # Across-species, restrict to a subset of species:
-python rnaseq_compare.py \\
+python3 multi_species_rnaseq_compare.py \\
     --counts *.tsv --metadata metadata.csv \\
-    --gene "ERLIN1" --mode across \\
-    --tissue1 liver --species "Human" "Mouse" "Zebrafish" \\
+    --gene "PRDM9" --mode across \\
+    --tissue1 gonads --species "Crotalus adamanteus" "Crotalus tigris" "Thamnophis sirtalis" \\
     --output results.csv
 """
 
@@ -46,9 +46,9 @@ import matplotlib.cm as cm
 import numpy as np
 
 
-# ---------------------------------------------------------------------------
-# I/O helpers
-# ---------------------------------------------------------------------------
+# Loads and validates the metadata file, ensuring required columns are present and 
+# normalised to lower-case for consistent access. 
+# The sample_id column is also stripped of whitespace and converted
 
 def load_metadata(metadata_path: str) -> pd.DataFrame:
     """
@@ -57,7 +57,7 @@ def load_metadata(metadata_path: str) -> pd.DataFrame:
     Required columns (case-insensitive):
         species   – species name
         sample_id – SRR / sample accession matching count-file column headers
-        tissue    – tissue label (e.g. liver, brain)
+        tissue    – tissue label (e.g. gonad, liver,skin, etc.)
 
     Returns a DataFrame with columns normalised to lower-case.
     """
@@ -78,6 +78,7 @@ def load_metadata(metadata_path: str) -> pd.DataFrame:
     return df
 
 
+# Loads a count file, ensuring the first column is 'gene_id' and setting it as the index.
 def load_count_file(filepath: str) -> pd.DataFrame:
     """
     Load a single tab-separated count file.
@@ -91,9 +92,7 @@ def load_count_file(filepath: str) -> pd.DataFrame:
     return df
 
 
-# ---------------------------------------------------------------------------
-# Gene search
-# ---------------------------------------------------------------------------
+# Search the gene_id index of a count DataFrame for rows matching a regex pattern.
 
 def find_gene_rows(count_df: pd.DataFrame, pattern: str) -> pd.DataFrame:
     """
@@ -104,7 +103,7 @@ def find_gene_rows(count_df: pd.DataFrame, pattern: str) -> pd.DataFrame:
     matched = [idx for idx in count_df.index if regex.search(idx)]
     return count_df.loc[matched] if matched else pd.DataFrame()
 
-
+# If multiple rows match the gene pattern, prompt the user to select one.
 def resolve_gene(count_df: pd.DataFrame, pattern: str) -> tuple[pd.Series, str]:
     """
     Return (row Series, gene_id string) for the gene matching *pattern*.
@@ -134,9 +133,8 @@ def resolve_gene(count_df: pd.DataFrame, pattern: str) -> tuple[pd.Series, str]:
         print("  Invalid choice, try again.")
 
 
-# ---------------------------------------------------------------------------
-# Expression extraction
-# ---------------------------------------------------------------------------
+# Extract expression values for the gene of interest from all count files,
+# filtering by tissue and optionally by species. Returns a tidy DataFrame.
 
 def extract_expression(
     count_files: list[str],
@@ -212,9 +210,7 @@ def extract_expression(
     return pd.DataFrame(records)
 
 
-# ---------------------------------------------------------------------------
-# Summarisation
-# ---------------------------------------------------------------------------
+# Summarise expression by species × tissue, calculating mean and SD of counts.
 
 def summarise_expression(expr_df: pd.DataFrame) -> pd.DataFrame:
     """Mean ± SD of counts grouped by species × tissue."""
@@ -227,9 +223,7 @@ def summarise_expression(expr_df: pd.DataFrame) -> pd.DataFrame:
     return summary
 
 
-# ---------------------------------------------------------------------------
-# Plotting – within mode
-# ---------------------------------------------------------------------------
+# Plotting – within mode: tissue1 vs tissue2 for every species (one panel per species).
 
 def plot_within(
     expr_df: pd.DataFrame,
@@ -277,9 +271,7 @@ def plot_within(
     _save_or_show(output_plot)
 
 
-# ---------------------------------------------------------------------------
-# Plotting – across mode
-# ---------------------------------------------------------------------------
+# Plotting – across mode: species on the x-axis, one (or two) tissue(s) compared across all species.
 
 def plot_across(
     expr_df: pd.DataFrame,
@@ -348,9 +340,7 @@ def _save_or_show(output_plot: str | None) -> None:
         plt.show()
 
 
-# ---------------------------------------------------------------------------
-# Output
-# ---------------------------------------------------------------------------
+# Save the tidy expression DataFrame to a CSV file.
 
 def save_results(expr_df: pd.DataFrame, output_path: str) -> None:
     """Write the tidy expression table to CSV."""
@@ -358,9 +348,7 @@ def save_results(expr_df: pd.DataFrame, output_path: str) -> None:
     print(f"[INFO] Results saved to: {output_path}")
 
 
-# ---------------------------------------------------------------------------
-# CLI
-# ---------------------------------------------------------------------------
+# Build the command-line argument parser with detailed help messages and validation rules.
 
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
@@ -425,7 +413,7 @@ def build_parser() -> argparse.ArgumentParser:
         help=(
             "Restrict 'across' mode to these species "
             "(default: all species in metadata). "
-            "Use quotes for names with spaces, e.g. --species 'Homo sapiens' 'Mus musculus'."
+            "Use quotes for names with spaces, e.g. --species 'Crotalus tigris' 'Crotalus adamanteus'."
         ),
     )
 
