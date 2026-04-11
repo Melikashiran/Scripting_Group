@@ -4,7 +4,7 @@ A modular, reproducible pipeline for multi-species RNA-seq analysis — from raw
 
 ---
 
-## 📁 Repository Structure
+##  Repository Structure
 
 ```
 ├── 1.data_download.sh                # Step 1 — Download raw FASTQ files
@@ -24,7 +24,7 @@ A modular, reproducible pipeline for multi-species RNA-seq analysis — from raw
 
 ---
 
-## ⚙️ Dependencies
+## Dependencies
 
 >  *Confirm exact tools and versions from our scripts*
 
