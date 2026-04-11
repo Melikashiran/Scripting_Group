@@ -52,3 +52,197 @@ If you want to make interactive graphics, you can also look into
 [plotly](https://plotly.com/python/)
 and
 [bokeh](https://bokeh.org/).
+
+
+
+
+# multi_species_rnaseq_compare
+
+Compare RNAseq expression of a gene across tissues and species using raw count matrices.
+
+---
+
+## Requirements
+
+```bash
+conda create -n rnaseq python=3.10
+conda activate rnaseq
+pip install -r requirements.txt
+```
+
+---
+
+## Input files
+
+### Count matrices
+Tab- or comma-separated files. First column must be `gene_id`, remaining columns are sample accessions.
+
+```
+gene_id,SRR22311013,SRR22311015,SRR22311018
+gene-ERLIN1|ERLIN1,4614,9028,7090
+gene-PRDM9|PRDM9,0,1046,7
+```
+
+### Metadata
+CSV or TSV with exactly three required columns: `sample_id`, `species`, `tissue`.
+
+```
+sample_id,species,tissue
+SRR22311013,Hemicordylus capensis,Liver
+SRR22311015,Hemicordylus capensis,Gonad
+SRR22311018,Hemicordylus capensis,Liver
+SRR15829334,Pelodiscus sinensis,Liver
+SRR15315613,Pelodiscus sinensis,Gonad
+```
+
+> `sample_id` must exactly match the column headers in the count files.
+
+---
+
+## Modes
+
+| Mode | Question answered |
+|------|------------------|
+| `within` | How does expression differ between two tissues **within** each species? |
+| `across` | How does expression of one tissue compare **across** species? |
+
+---
+
+## Usage
+
+### Within-species: Gonad vs Liver for every species
+
+```bash
+python3 multi_species_rnaseq_compare.py \
+    --counts ../data/countmatrices/*.csv \
+    --metadata metadata.csv \
+    --gene "PRDM9" \
+    --mode within \
+    --tissue1 Gonad \
+    --tissue2 Liver \
+    --output results/prdm9_within.csv \
+    --plot results/prdm9_within.png
+```
+
+Output: one grouped bar chart — species on x-axis, Gonad and Liver bars side-by-side for each.
+
+---
+
+### Across-species: Gonad expression in all species
+
+```bash
+python3 multi_species_rnaseq_compare.py \
+    --counts ../data/countmatrices/*.csv \
+    --metadata metadata.csv \
+    --gene "PRDM9" \
+    --mode across \
+    --tissue1 Gonad \
+    --output results/prdm9_across.csv \
+    --plot results/prdm9_across.png
+```
+
+Output: one bar per species, coloured distinctly.
+
+---
+
+### Across-species: restrict to a subset of species
+
+```bash
+python3 multi_species_rnaseq_compare.py \
+    --counts ../data/countmatrices/*.csv \
+    --metadata metadata.csv \
+    --gene "PRDM9" \
+    --mode across \
+    --tissue1 Gonad \
+    --species "Hemicordylus capensis" "Pogona vitticeps" "Naja naja" \
+    --output results/prdm9_subset.csv \
+    --plot results/prdm9_subset.png
+```
+
+---
+
+### Skip the plot (output CSV only)
+
+```bash
+python3 multi_species_rnaseq_compare.py \
+    --counts ../data/countmatrices/*.csv \
+    --metadata metadata.csv \
+    --gene "PRDM9" \
+    --mode within \
+    --tissue1 Gonad --tissue2 Liver \
+    --output results/prdm9_within.csv \
+    --no-plot
+```
+
+---
+
+## All arguments
+
+| Argument | Required | Description |
+|----------|----------|-------------|
+| `--counts` | Yes| One or more count matrix files (glob patterns accepted) |
+| `--metadata` | Yes| Metadata CSV/TSV |
+| `--gene` |Yes| Gene name or regex pattern to search the `gene_id` column |
+| `--mode` |Yes| `within` or `across` |
+| `--tissue1` |Yes| Primary tissue label |
+| `--tissue2` | `within` only | Second tissue label |
+| `--species` |No| Restrict `across` mode to these species |
+| `--output` |No| Output CSV path (default: `expression_results.csv`) |
+| `--plot` |No| Save plot to file instead of displaying interactively |
+| `--no-plot` |No| Skip plotting entirely |
+
+---
+
+## Gene search
+
+The `--gene` argument accepts any regular expression and is matched against the full `gene_id` string (case-insensitive).
+
+```bash
+--gene "PRDM9"          # matches gene-PRDM9|PRDM9
+--gene "LOC12834"       # matches any LOC ID containing that string
+--gene "^gene-ERLIN1"   # anchored match
+```
+
+> If a gene is absent from a species' count file, that file is skipped with a warning and the run continues.
+
+> If multiple genes match your pattern, the script will prompt you to pick one interactively.
+
+---
+
+## Output
+
+### CSV (tidy format)
+One row per sample, written to `--output`.
+
+```
+gene_id,species,tissue,sample_id,count
+gene-PRDM9|PRDM9,Hemicordylus capensis,Gonad,SRR22311015,1046
+gene-PRDM9|PRDM9,Pogona vitticeps,Liver,SRR21252290,340
+```
+
+### Console summary
+Mean ± SD printed per species × tissue before the plot is drawn.
+
+```
+=== Expression Summary (mean ± SD) ===
+              species tissue  n      mean         std
+Hemicordylus capensis  gonad  1    1046.0         0.0
+    Pogona vitticeps  liver  2     512.0        34.6
+```
+
+---
+
+## Common issues
+
+**Gene not found**
+Run a quick grep to check the exact ID format in your files:
+```bash
+grep -i "PRDM9" ../data/countmatrices/*.csv | head
+```
+
+**No samples collected after loading**
+Check that tissue labels in `--tissue1` / `--tissue2` match the `tissue` column in your metadata (e.g. `Gonad` not `gonads`).
+
+**Wrong separator detected**
+The script auto-detects: `.csv` >>> comma, `.tsv` / `.txt`
+ Rename the file if needed.
