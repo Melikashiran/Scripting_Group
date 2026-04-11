@@ -1,0 +1,7 @@
+gene_id,species,tissue,sample_id,count
+gene-PRDM9|PRDM9,Trachemys scripta,gonad,SRR22062179,2993
+gene-PRDM9|PRDM9,Trachemys scripta,liver,SRR11306934,0
+gene-PRDM9|PRDM9,Trachemys scripta,liver,SRR11306933,0
+gene-PRDM9|PRDM9,Hemicordylus capensis,liver,SRR22311013,0
+gene-PRDM9|PRDM9,Hemicordylus capensis,gonad,SRR22311015,1046
+gene-PRDM9|PRDM9,Hemicordylus capensis,liver,SRR22311018,7
