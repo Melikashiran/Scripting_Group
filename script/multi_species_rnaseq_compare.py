@@ -380,7 +380,7 @@ def build_parser() -> argparse.ArgumentParser:
         help="Regex to search the gene_id column (e.g. 'ERLIN1').",
     )
 
-    # --- Comparison mode ---
+    # Comparison mode
     parser.add_argument(
         "--mode",
         choices=["within", "across"],
@@ -391,7 +391,7 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
 
-    # --- Tissue selection ---
+    # Tissue selection
     parser.add_argument(
         "--tissue1",
         required=True,
@@ -406,7 +406,7 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
 
-    # --- Species filter (across mode) ---
+    # Species filter (across mode)
     parser.add_argument(
         "--species",
         nargs="+", default=None, metavar="SPECIES",
@@ -417,7 +417,7 @@ def build_parser() -> argparse.ArgumentParser:
         ),
     )
 
-    # --- Output ---
+    # Output options
     parser.add_argument(
         "-o", "--output",
         default="expression_results.csv",
@@ -455,17 +455,17 @@ def main() -> None:
     args = parser.parse_args()
     validate_args(args)
 
-    # ---- Load metadata ----
+    # Load metadata
     print(f"[INFO] Loading metadata from: {args.metadata}")
     metadata = load_metadata(args.metadata)
     print(f"[INFO] {len(metadata)} samples found in metadata.")
 
-    # ---- Determine tissues to collect ----
+    # Determine tissues to collect
     tissues = [args.tissue1]
     if args.tissue2:
         tissues.append(args.tissue2)
 
-    # ---- Extract expression ----
+    # Extract expression
     expr_df = extract_expression(
         count_files=args.counts,
         metadata=metadata,
@@ -479,13 +479,13 @@ def main() -> None:
     print(f"[INFO] Mode         : {args.mode}")
     print(f"[INFO] Observations : {len(expr_df)} sample-level records\n")
 
-    # ---- Summary table (printed to console) ----
+    # Summary table (printed to console)
     summary = summarise_expression(expr_df)
-    print("=== Expression Summary (mean ± SD) ===")
+    print(">>>>>Expression Summary (mean ± SD)<<<<<<<")
     print(summary.to_string(index=False))
     print()
 
-    # ---- Save tidy results ----
+    # Save tidy results
     save_results(expr_df, args.output)
 
     # ---- Plot ----
