@@ -7,16 +7,16 @@ A modular, reproducible pipeline for multi-species RNA-seq analysis — from raw
 ## 📁 Repository Structure
 
 ```
-├── data_download.sh               # Step 1 — Download raw FASTQ files
-├── download_assembly.sh           # Step 2 — Download reference genome & annotation
-├── quality_control.sh             # Step 3 — Quality control on raw reads
-├── trimmo_qualitycontrol.sh       # Step 4 — Adapter trimming + post-trim QC
-├── download_script.sh             # Step ? — (confirm purpose)
-├── mapping.sh                     # Step 5 — Map reads to reference genome
-├── final_mapping.sh               # Step 6 — Final/refined mapping
-├── 03b_prepDE.py3                 # Step 7 — Prepare count matrix
-├── multi_species_rnaseq_compare.py # Step 8 — Cross-species comparison
-├── analysis.py                    # Step 9 — Downstream statistical analysis
+├── 1.data_download.sh               # Step 1 — Download raw FASTQ files
+├── 2.download_assembly.sh           # Step 2 — Download reference genome & annotation
+├── 3.quality_control.sh             # Step 3 — Quality control on raw reads
+├── 4.trimmo_qualitycontrol.sh       # Step 4 — Adapter trimming + post-trim QC
+├── 5.download_script.sh             # Step ? — (confirm purpose)
+├── 6.mapping.sh                     # Step 5 — Map reads to reference genome
+├── 7.final_mapping.sh               # Step 6 — Final/refined mapping
+├── 8.prepDE.py3                 # Step 7 — Prepare count matrix
+├── 9.multi_species_rnaseq_compare.py # Step 8 — Cross-species comparison
+├── 10.analysis.py                    # Step 9 — Downstream statistical analysis
 ├── metadata.csv                   # Sample metadata table
 ├── quality_control/               # Output: raw QC reports
 └── trim_quality_control/          # Output: post-trim QC reports
