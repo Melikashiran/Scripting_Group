@@ -18,7 +18,7 @@ python3 multi_species_rnaseq_compare.py \
 ### The output
 This use case produces two major output
 > The clean expression count for only the selected gene 
-[expresion matrix](./prdm9_within.csv)
+[Expresion matrix](./prdm9_within.csv)
 
 > The a nice visualization of the plots if `--plot` option is enabled
 
@@ -41,8 +41,8 @@ python3 multi_species_rnaseq_compare.py \
     --plot results/prdm9_across.png
 ```
 
-> Expression matrix
-[expresion matrix](./gonad_summary_across.csv)
+## Expression matrix
+[Expresion matrix](./gonad_summary_across.csv)
 
 ## Plot
 ### Gonad expression across species
