@@ -127,4 +127,4 @@ python3 10.analysis.py
 ---
 ## Authors
 
-> Melika Ghasemi Siran, Prince Ansah, Sean Onileowo, Surma Mohiudden Meem 
+> Melika Ghasemi Siran, Prince Mensah Ansah, Sean Onileowo, Surma Mohiudden Meem 

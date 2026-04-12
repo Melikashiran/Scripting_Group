@@ -4,7 +4,7 @@
 ## Within Usage
 This option or mode allows use to analyze the expression of any selected gene within the species across multiple tissues. Examples: The expression of `prdm9` across `gonad` and `liver` tissues for each species.
 
-```bash
+```python
 python3 multi_species_rnaseq_compare.py \
     --counts ../data/countmatrices/*.csv \
     --metadata metadata.csv \
@@ -18,7 +18,7 @@ python3 multi_species_rnaseq_compare.py \
 ### The output
 This use case produces two major output
 > The clean expression count for only the selected gene 
-![expresion matrix](./prdm9_within.csv)
+[expresion matrix](./prdm9_within.csv)
 
 > The a nice visualization of the plots if `--plot` option is enabled
 
@@ -30,7 +30,7 @@ This use case produces two major output
 This compares one tissue for multiple species
 Similar output as the `within`
 
-```bash
+```python
 python3 multi_species_rnaseq_compare.py \
     --counts ../data/countmatrices/*.csv \
     --metadata metadata.csv \
@@ -42,18 +42,18 @@ python3 multi_species_rnaseq_compare.py \
 ```
 
 > Expression matrix
-![expresion matrix](./gonad_summary_across.csv)
+[expresion matrix](./gonad_summary_across.csv)
 
-> Plot
-### Gonad
+## Plot
+### Gonad expression across species
 ![across_plot](./gonad_summary_across.png)
 
-### Liver tissue
+### Liver expression across species
 ![across_plot1](./gonad_summary_across1.png)
 
 ---
 ## Important Notice
-Without the `--species` flag, the script bundles all the count matrix available. If the user wants a specific species. They could select such species with the flag
+Without the `--species` flag, the script bundles all the count matrices available. If the user wants a specific species,they could select such species with the flag
 
 
 ---
