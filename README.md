@@ -62,7 +62,7 @@ Compare RNAseq expression of a gene across tissues and species using raw count m
 
 ---
 ## A picture of the help info
-![help](./sample_run/rnaseq_compare_helpinfo.png)
+![help](./test_run/rnaseq_compare_helpinfo.png)
 
 ---
 ## Requirements
