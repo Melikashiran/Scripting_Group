@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Load required modules from the cluster environment
 source /apps/profiles/modules_asax.sh.dyn
 module load sra
 
@@ -7,6 +8,7 @@ SRA_TABLE="/home/aubpma001/prdm9/Scripting_Group/data/sra/sra_lists.csv"
 RAW_DIR="raw_data"
 SRA_DIR="sra_cache"
 
+# Create output directories
 mkdir -p "$RAW_DIR"
 mkdir -p "$SRA_DIR"
 
