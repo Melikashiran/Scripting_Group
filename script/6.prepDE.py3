@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+"""Build gene and transcript count matrices from StringTie `-e` GTF output."""
+
 import re, csv, sys, os, glob, warnings, itertools
 from math import ceil
 from optparse import OptionParser
@@ -89,9 +91,11 @@ samples.sort()
 ## other options: ex. exon, transcript, mRNA, 5'UTR
 #####
 def is_transcript(x):
+  """Return True when a parsed GTF row is a transcript feature."""
   return len(x)>2 and x[2]=="transcript"
 
 def getGeneID(s, ctg, tid):
+  """Extract a gene identifier from the GTF attributes field."""
   r=RE_GENE_ID.search(s)
   #if r: return r.group(1)
   rn=RE_GENE_NAME.search(s)
@@ -104,6 +108,7 @@ def getGeneID(s, ctg, tid):
   return tid
 
 def getCov(s):
+  """Extract coverage from the GTF attributes field."""
   r=RE_COVERAGE.search(s)
   if r:
     v=float(r.group(1))
@@ -112,10 +117,12 @@ def getCov(s):
   return 0.0
 
 def is_overlap(x,y): #NEEDS TO BE INTS!
+  """Return True when two genomic intervals overlap."""
   return x[0]<=y[1] and y[0]<=x[1]
 
 
 def t_overlap(t1, t2): #from badGenes: chromosome, strand, cluster, start, end, (e1start, e1end)...
+    """Return True when two transcript models overlap on the genome."""
     if t1[0] != t2[0] or t1[1] != t2[1] or t1[5]<t2[4]: return False
     for i in range(6, len(t1)):
         for j in range(6, len(t2)):
