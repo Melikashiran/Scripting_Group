@@ -56,12 +56,15 @@ and
 ---
 
 
-# Multi Species Rnaseq Compare (`multi_species_rnaseq_compare.py`)
+# Multi Species RNAseq Compare (`multi_species_rnaseq_compare.py`)
 
 Compare RNAseq expression of a gene across tissues and species using raw count matrices.
 
 ---
+## A picture of the help info
+![help](./sample_run/rnaseq_compare_helpinfo.png)
 
+---
 ## Requirements
 
 ```bash
@@ -255,3 +258,7 @@ Make sure the name of tissue provided on th command line correspond with the nam
 **Wrong separator detected**
 The script auto-detects: `.csv` , `.tsv` / `.txt`
 Rename the file if needed.
+
+---
+## Authors
+> Melika Ghasemi Siran, Prince Mensah Ansah, Sean Onileowo, Surma Mohiudden Meem 

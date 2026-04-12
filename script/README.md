@@ -124,11 +124,7 @@ python3 8.prepDE.py3
 python3 9.multi_species_rnaseq_compare.py
 python3 10.analysis.py
 ```
+---
 ## Authors
 
 > Melika Ghasemi Siran, Prince Ansah, Sean Onileowo, Surma Mohiudden Meem 
----
-
-## License
-
-
