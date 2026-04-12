@@ -262,7 +262,7 @@ Rename the file if needed.
 
 ---
 ## Use Links to Navigate Around
->>>>>>>>[**PIPELINE**](./script/README.md) >>>>>>>><<<<<<<<[**USAGE**](./sample_run/README.md)<<<<<<<<
+>>>>>>>>[**PIPELINE**](./script/README.md) >>>>>>>><<<<<<<<[**USAGE**](./test_run/README.md)<<<<<<<<
 
 ---
 ## Authors
