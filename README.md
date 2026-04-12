@@ -133,7 +133,7 @@ Output: one grouped bar chart — species on x-axis, Gonad and Liver bars side-b
 
 ### Across-species: Gonad expression in all species
 
-```bash
+```python
 python3 multi_species_rnaseq_compare.py \
     --counts ../data/countmatrices/*.csv \
     --metadata metadata.csv \
@@ -150,7 +150,7 @@ Output: one bar per species, coloured distinctly.
 
 ### Across-species: restrict to a subset of species
 
-```bash
+```python
 python3 multi_species_rnaseq_compare.py \
     --counts ../data/countmatrices/*.csv \
     --metadata metadata.csv \
@@ -166,7 +166,7 @@ python3 multi_species_rnaseq_compare.py \
 
 ### Skip the plot (output csv only)
 
-```bash
+```python
 python3 multi_species_rnaseq_compare.py \
     --counts ../data/countmatrices/*.csv \
     --metadata metadata.csv \
