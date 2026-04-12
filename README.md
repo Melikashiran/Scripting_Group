@@ -53,10 +53,10 @@ If you want to make interactive graphics, you can also look into
 and
 [bokeh](https://bokeh.org/).
 
+---
 
 
-
-# multi_species_rnaseq_compare
+# Multi Species Rnaseq Compare (`multi_species_rnaseq_compare.py`)
 
 Compare RNAseq expression of a gene across tissues and species using raw count matrices.
 
@@ -101,14 +101,14 @@ SRR15315613,Pelodiscus sinensis,Gonad
 
 ## Modes
 
-| Mode | Question answered |
+| Mode | Question?|
 |------|------------------|
 | `within` | How does expression differ between two tissues **within** each species? |
 | `across` | How does expression of one tissue compare **across** species? |
 
 ---
 
-## Usage
+## Use case
 
 ### Within-species: Gonad vs Liver for every species
 
@@ -161,7 +161,7 @@ python3 multi_species_rnaseq_compare.py \
 
 ---
 
-### Skip the plot (output CSV only)
+### Skip the plot (output csv only)
 
 ```bash
 python3 multi_species_rnaseq_compare.py \
@@ -176,7 +176,7 @@ python3 multi_species_rnaseq_compare.py \
 
 ---
 
-## All arguments
+## Arguments
 
 | Argument | Required | Description |
 |----------|----------|-------------|
@@ -211,7 +211,7 @@ The `--gene` argument accepts any regular expression and is matched against the 
 
 ## Output
 
-### CSV (tidy format)
+### Gene Expression result (CSV format)
 One row per sample, written to `--output`.
 
 ```
@@ -220,7 +220,7 @@ gene-PRDM9|PRDM9,Hemicordylus capensis,Gonad,SRR22311015,1046
 gene-PRDM9|PRDM9,Pogona vitticeps,Liver,SRR21252290,340
 ```
 
-### Console summary
+### Expression Summary
 Mean ± SD printed per species × tissue before the plot is drawn.
 
 ```
@@ -233,16 +233,25 @@ Hemicordylus capensis  gonad  1    1046.0         0.0
 ---
 
 ## Common issues
+The are some of the common issues one can face, using our `multi_species_rnaseq_compare.py` for your downstream analysis. In each case, we have provide a quick solution to the problem.
 
 **Gene not found**
 Run a quick grep to check the exact ID format in your files:
+
 ```bash
-grep -i "PRDM9" ../data/countmatrices/*.csv | head
+grep -i "PRDM9" 'species_specific_count_matrix.csv' | head
+```
+This will give you the ideas where the gene exist or not. Sometimes, gene names for the same gene across different species may be different. In that case you can use `sed` to edit the count matrix and rerun the script
+
+```bash
+sed 's/current gene name/actual gene name/g' name_of_file > new_name_file
+# Example the P. gattus has the prdm9 as gene-LOC117677669|LOC117677669
+sed 's/gene-LOC117677669|LOC117677669/gene_PRDM9|PRDM9/g' Counts_pgattus.csv > Counts_pgattus.csv 
 ```
 
 **No samples collected after loading**
 Check that tissue labels in `--tissue1` / `--tissue2` match the `tissue` column in your metadata (e.g. `Gonad` not `gonads`).
-
+Make sure the name of tissue provided on th command line correspond with the name specified on the `metadata.csv`
 **Wrong separator detected**
-The script auto-detects: `.csv` >>> comma, `.tsv` / `.txt`
- Rename the file if needed.
+The script auto-detects: `.csv` , `.tsv` / `.txt`
+Rename the file if needed.
