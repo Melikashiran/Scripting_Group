@@ -259,6 +259,12 @@ Make sure the name of tissue provided on th command line correspond with the nam
 The script auto-detects: `.csv` , `.tsv` / `.txt`
 Rename the file if needed.
 
+
+---
+## Use Links to Navigate Around
+>> [**PIPELINE**](./script/README.md)
+>> [**USAGE**](./sample_run/README.md)
+
 ---
 ## Authors
 > Melika Ghasemi Siran, Prince Mensah Ansah, Sean Onileowo, Surma Mohiudden Meem 
