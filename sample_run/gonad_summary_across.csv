@@ -1,0 +1,20 @@
+gene_id,species,tissue,sample_id,count
+gene-PRDM8|PRDM8,Pantherophis guttatus,liver,SRR9596707,14
+gene-PRDM8|PRDM8,Pantherophis guttatus,liver,SRR9596715,68
+gene-PRDM8|PRDM8,Trachemys scripta,liver,SRR11306934,31
+gene-PRDM8|PRDM8,Trachemys scripta,liver,SRR11306933,43
+gene-PRDM8|PRDM8,Crotalus tigris,liver,SRR11524076,32
+gene-PRDM8|PRDM8,Erythrolamprus reginae,liver,SRR30844226,4
+gene-PRDM8|PRDM8,Mauremys mutica,liver,SRR21159093,9
+gene-PRDM8|PRDM8,Crotalus tigris,liver,SRR11524076,32
+gene-PRDM8|PRDM8,Pantherophis guttatus,liver,SRR9596707,14
+gene-PRDM8|PRDM8,Pantherophis guttatus,liver,SRR9596715,68
+gene-PRDM8|PRDM8,Hemicordylus capensis,liver,SRR22311013,0
+gene-PRDM8|PRDM8,Hemicordylus capensis,liver,SRR22311018,0
+gene-PRDM8|PRDM8,Pelodiscus sinensis,liver,SRR15829334,0
+gene-PRDM8|PRDM8,Pelodiscus sinensis,liver,SRR15829335,0
+gene-PRDM8|PRDM8,Pelodiscus sinensis,liver,SRR15829337,0
+gene-PRDM8|PRDM8,Pelodiscus sinensis,liver,SRR15829338,0
+gene-PRDM8|PRDM8,Naja naja,liver,SRR8754967,2
+gene-PRDM8|PRDM8,Sceloporus undulatus,liver,SRR11647816,0
+gene-PRDM8|PRDM8,Sceloporus undulatus,liver,SRR11647817,0

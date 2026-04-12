@@ -81,8 +81,8 @@ The following tools were used in the pipeline
 
 
 **Output:**
-- Sorted and indexed `.bam` files 
-
+- Sorted and indexed `.bam` files -> `./alignment`
+/
 ---
 
 ### Step 6 — `6.prepDE.py3`
