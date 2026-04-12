@@ -115,7 +115,7 @@ SRR15315613,Pelodiscus sinensis,Gonad
 
 ### Within-species: Gonad vs Liver for every species
 
-```bash
+```python
 python3 multi_species_rnaseq_compare.py \
     --counts ../data/countmatrices/*.csv \
     --metadata metadata.csv \
