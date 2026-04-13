@@ -57,9 +57,9 @@ and
 
 # CHECK OUT OUR PIPELINE AND USE TEST HERE
 
---------[PIPELINE](./script/README.md)--------
+---------------->[PIPELINE](./script/README.md)<----------------
 
---------[USAGE](./test_run/README.md)
+---------------->[USAGE](./test_run/README.md)<----------------
 
 
 ---
